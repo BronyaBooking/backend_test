@@ -16,7 +16,6 @@ class Master extends Model
         'referral_code',
     ];
 
-    /** Все платежи мастера. */
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
