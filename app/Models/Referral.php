@@ -7,13 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-/**
- * Привязка приведённого мастера к тому, кто его привёл.
- *
- * Программы:
- *  - master_invite — мастер пригласил мастера по своему коду
- *  - influencer    — мастер пришёл по промокоду инфлюенсера
- */
 class Referral extends Model
 {
     use HasFactory;
@@ -30,21 +23,16 @@ class Referral extends Model
         'status',
     ];
 
-    /** Кто привёл. */
     public function referrerMaster(): BelongsTo
     {
         return $this->belongsTo(Master::class, 'referrer_master_id');
     }
 
-    /** Кого привели. */
     public function referredMaster(): BelongsTo
     {
         return $this->belongsTo(Master::class, 'referred_master_id');
     }
 
-    /**
-     * Активные привязки — те, что ещё могут принести вознаграждение.
-     */
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('status', self::STATUS_REWARDED);

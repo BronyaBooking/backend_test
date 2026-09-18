@@ -13,9 +13,6 @@ class PaymentObserver
     {
     }
 
-    /**
-     * Обработка нового платежа.
-     */
     public function created(Payment $payment): void
     {
         if (!Payment::isMonetary($payment)) {
@@ -30,7 +27,6 @@ class PaymentObserver
             return;
         }
 
-        // Вознаграждение выдаётся один раз — с первого денежного платежа.
         $monetaryCount = Payment::where('master_id', $payment->master_id)
             ->monetary()
             ->count();

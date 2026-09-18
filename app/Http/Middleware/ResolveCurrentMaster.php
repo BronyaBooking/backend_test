@@ -7,14 +7,6 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Заглушка авторизации.
- *
- * Текущий мастер берётся из заголовка X-Master-Id и кладётся
- * в атрибуты запроса. Достать его можно так:
- *
- *     $master = $request->attributes->get('current_master');
- */
 class ResolveCurrentMaster
 {
     public function handle(Request $request, Closure $next): Response

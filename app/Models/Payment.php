@@ -7,14 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-/**
- * Платёж мастера за подписку.
- *
- * Типы:
- *  - card, sbp   — настоящие деньги
- *  - promo       — оплата промокодом (amount = 0)
- *  - trial       — пробный период (amount = 0)
- */
 class Payment extends Model
 {
     use HasFactory;
@@ -39,14 +31,12 @@ class Payment extends Model
         return $this->belongsTo(Master::class);
     }
 
-    /** Платёж настоящими деньгами. */
     public static function isMonetary(self $payment): bool
     {
         return in_array($payment->type, [self::TYPE_CARD, self::TYPE_SBP], true)
             && $payment->amount > 0;
     }
 
-    /** Только денежные платежи. */
     public function scopeMonetary(Builder $query): Builder
     {
         return $query->whereIn('type', [self::TYPE_CARD, self::TYPE_SBP]);
